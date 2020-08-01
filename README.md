@@ -1,4 +1,4 @@
-# Python Scrape Playlist
+# Python Scrape Youtube Playlist
  Scrape playlist with beautifulsoup and request.
  
 ## How to run it?
