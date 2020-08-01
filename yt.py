@@ -9,20 +9,12 @@ class YT(object):
         back=[]
         if re.match(r'https://www.youtube.com/watch\?v=[a-zA-Z0-9]+&list=[a-zA-Z0-9]',url):
             a=re.search(r'https://www.youtube.com/watch\?v=[a-zA-Z0-9]+&list=[a-zA-Z0-9]+&index=(.*)',url)
-            b=re.search(r'https://www.youtube.com/watch\?v=[a-zA-Z0-9]+&list=[a-zA-Z0-9]+&index=(.*)&',url)
-            if a or b:
-                try:
-                    counter=int(a.group(1))
-                except:
-                    counter=int(b.group(1))
-            else:
-                counter=1
+            b=re.search(r'https://www.youtube.com/watch\?v=[a-zA-Z0-9]+&list=[a-zA-Z0-9]+&index=(.*)&',url)        
             res= requests.get(url)
             soup=bs4(res.text, 'html.parser')
             aid=soup.find('script',string=re.compile('ytInitialData'))
             scrip=str(aid).replace('<script>\n    window["ytInitialData"] = ','').split(';')
             try:
-                #print(scrip,len(scrip))
                 js=json.loads(scrip[0]+scrip[1])
             except:
                 try:
@@ -37,15 +29,10 @@ class YT(object):
                     title=i['playlistPanelVideoRenderer']['title']['simpleText']
                     duration=i['playlistPanelVideoRenderer']['lengthText']['simpleText']
                 except:
-                    title='已刪除影片'
+                    title='已刪除影片'#has been delete
                     song_duration='00:00'
                 detail=[videoId,title,duration]
                 back.append(detail)
-            # i=back[counter-1]
-            # del back[counter-1]
-            # back.insert(0,back[counter-1])
-
-        #
         elif re.match('https://www.youtube.com/playlist\?list=',url):
             searched=requests.get(url,headers=headers)
             soup=bs4(searched.text,'html.parser')
