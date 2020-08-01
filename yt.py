@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup as bs4
 import requests
 import re
-import json,youtube_dl,datetime
+import json
 headers= {"User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"}
 class YT(object):
     @staticmethod
